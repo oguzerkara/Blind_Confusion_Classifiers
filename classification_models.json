@@ -1,0 +1,49 @@
+{
+  "traditional": [
+    "alexnet",
+    "vgg16"
+  ],
+  "classic": [
+    "resnet50",
+    "resnet200d", 
+    "resnet101",
+    "resnext101",
+    "wideresnet101_2",
+    "inception_resnet_v2",
+    "inception_v3",
+    "mobilenet_v2",
+    "densenet161",
+    "densenet201"
+  ],
+  "advanced": [
+    "convnext_xlarge",
+    "convnext_large",
+    "convnext_base",
+    "efficientnet_b4",
+    "efficientnet_b3",
+    "efficientnet_v2_s",
+    "efficientnet_v2_l",
+    "efficientnet_b7",
+    "efficientnet_b0",
+    "nfnet_f5",
+    "nfnet_f4",
+    "nfnet_f2",
+    "resnest50d",
+    "resnest101e"
+  ],
+  "transformers": [
+    "vit_large16",
+    "vit_base16",
+    "swin_base",
+    "swin_large",
+    "deit_base"
+  ],
+  "robustified": [
+    "noisystudent_b0",
+    "noisystudent_b4",
+    "noisystudent_b7",
+    "noisystudent_b3",
+    "augmix",
+    "bit_m"
+  ]
+}
