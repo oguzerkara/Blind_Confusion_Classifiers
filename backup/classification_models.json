@@ -45,9 +45,5 @@
     "noisystudent_b3",
     "augmix",
     "bit_m"
-  ],
-  "test": [
-    "convnext_large",
-    "vit_base16"
   ]
 }
