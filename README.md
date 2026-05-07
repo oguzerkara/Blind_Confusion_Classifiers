@@ -11,17 +11,17 @@ The code was originally developed under the thesis project **Blind Confusion of 
 
 ## Visual overview
 
-![Blind black box corruption attack overview](assets/graphical_abstract.jpg)
+![Blind black box corruption attack overview](figures/graphical_abstract.jpg)
 
 The paper evaluates how different image corruptions affect classification models when only the input and output behavior are considered. The examples below show the two main corruption families used in the study.
 
 **Structured corruptions**
 
-![Structured corruption examples](assets/structured_corruptions.jpeg)
+![Structured corruption examples](figures/structured_corruptions.png)
 
 **Common corruptions**
 
-![Common corruption examples](assets/common_corruptions.jpeg)
+![Common corruption examples](figures/common_corruptions.png)
 
 ## What the paper covers
 
