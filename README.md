@@ -49,7 +49,7 @@ The paper also discusses Accuracy Confidence Divergence, abbreviated as ACD, to 
 ├── map_synset.txt                 # ImageNet synset to numeric label mapping
 ├── synset_words.txt               # ImageNet synset names and descriptions
 ├── dataset_reference.md           # ImageNet reference note
-├── assets/                        # reference figures used in README
+├── figures/                       # reference figures used in README
 │   ├── graphical_abstract.jpg
 │   ├── structured_corruptions.jpeg
 │   └── common_corruptions.jpeg
