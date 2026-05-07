@@ -9,7 +9,7 @@ GPU:
   NVIDIA GeForce RTX 4080
   Driver: 550.144.03
   CUDA runtime: 12.4
-
+ 
 Python:
   Python 3.10.16
 

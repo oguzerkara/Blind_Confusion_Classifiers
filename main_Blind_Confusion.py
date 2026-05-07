@@ -139,7 +139,7 @@ def apply_noise(images, nt, intensities, gen):
 # ----------------------------------------------------------
 # ---------------   Image Quality Metrics   ----------------
 # ----------------------------------------------------------
-
+ 
 def compute_ssim(img1, img2):
 
     img1_np = img1.permute(1,2,0).cpu().numpy()
@@ -159,11 +159,11 @@ def compute_psnr(orig: torch.Tensor, noisy: torch.Tensor, max_val: float = 1.0) 
         return float('inf')  # perfect match => inf PSNR
     return 10.0 * math.log10((max_val * max_val) / mse)
 
-# intuitive approach to compare noise distribution level difference ref. to original image
+# Compare the intensity distribution shift relative to the original image.
 def compute_kl(orig: torch.Tensor, noisy: torch.Tensor) -> float:
     orig_f = orig.detach().cpu().flatten()
     noisy_f = noisy.detach().cpu().flatten()
-    # histograms
+    # Compute fixed-bin histograms for the original and corrupted images.
     h0 = torch.histc(orig_f, bins=256, min=0.0, max=1.0)
     h1 = torch.histc(noisy_f, bins=256, min=0.0, max=1.0)
 
@@ -175,7 +175,7 @@ def compute_kl(orig: torch.Tensor, noisy: torch.Tensor) -> float:
 # ----------------------------------------------------------
 # ---------------        Inference         -----------------
 # ----------------------------------------------------------
-# Serial gpu access
+# Serialize GPU access.
 gpu_lock = Lock()
 def model_inference_in_batches(
     model, model_name, mean, std, input_size,
@@ -198,7 +198,7 @@ def model_inference_in_batches(
         gen_chunk = torch.Generator(device=DEVICE).manual_seed(SEED + seed_offset + start)
 
         chunk_raw = apply_noise(clean_imgs, noise_type_lower, chunk_intensities, gen_chunk)
-        # chunk burada [B, ck, C, H, W]
+        # chunk [B, ck, C, H, W]
         chunk = (chunk_raw - mean) / std
 
         b, ck, C, H, W = chunk.shape
@@ -377,7 +377,7 @@ def main(noise_type, ds_folder, synset_words_file, synset_map_file, out_dir, mod
     noise_out_dir = os.path.join(out_dir, noise_type)
     os.makedirs(noise_out_dir, exist_ok=True)
 
-    # parallelize across at most 2 models to limit GPU memory
+    # Process models sequentially to limit GPU memory usage.
     for model_name in models_list:
         if not model_name:
             continue
@@ -435,7 +435,7 @@ def main(noise_type, ds_folder, synset_words_file, synset_map_file, out_dir, mod
             append_jsonl(jsonl_path, batch_results, model_name, noise_type, CORRUPTION_IDS[noise_type])
             save_progress(progress_path, model_name, batch_idx + 1)
 
-        # free GPU memory
+        # Release GPU memory before loading the next model.
         with gpu_lock:
             model.to("cpu")
         del model, mean, std
