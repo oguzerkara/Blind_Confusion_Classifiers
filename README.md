@@ -1,5 +1,9 @@
 # Blind Confusion of Classification Networks
 
+> **Blind confusion of classification networks: A black box evaluation under common and structured image corruptions**  
+> *Neurocomputing, Volume 686, Article 133678, 2026*  
+> DOI: https://doi.org/10.1016/j.neucom.2026.133678  
+> Paper: https://www.sciencedirect.com/science/article/pii/S0925231226010751
 Paper link: https://www.sciencedirect.com/science/article/pii/S0925231226010751  
 DOI: https://doi.org/10.1016/j.neucom.2026.133678
 
