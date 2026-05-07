@@ -139,7 +139,7 @@ def apply_noise(images, nt, intensities, gen):
 # ----------------------------------------------------------
 # ---------------   Image Quality Metrics   ----------------
 # ----------------------------------------------------------
-
+ 
 def compute_ssim(img1, img2):
 
     img1_np = img1.permute(1,2,0).cpu().numpy()

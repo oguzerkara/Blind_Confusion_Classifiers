@@ -265,7 +265,7 @@ If you use this repository, cite the paper:
   doi     = {10.1016/j.neucom.2026.133678}
 }
 ```
-
+  
 The broader thesis codebase is available in the [BlindConfusionOfNeuralNetworks](https://github.com/oguzerkara/BlindConfusionOfNeuralNetworks) repository.
 
 ## License and data notice
