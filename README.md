@@ -270,7 +270,7 @@ Code reference:
 
 ```text
 Blind Confusion of Neural Networks
-GitHub repository: https://github.com/<your-username>/<your-repository>
+GitHub repository: https://github.com/oguzerkara/BlindConfusionOfNeuralNetworks
 ```
 
 Replace the placeholder with the final public repository URL.
