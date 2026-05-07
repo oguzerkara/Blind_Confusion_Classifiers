@@ -198,7 +198,7 @@ def model_inference_in_batches(
         gen_chunk = torch.Generator(device=DEVICE).manual_seed(SEED + seed_offset + start)
 
         chunk_raw = apply_noise(clean_imgs, noise_type_lower, chunk_intensities, gen_chunk)
-        # chunk burada [B, ck, C, H, W]
+        # chunk [B, ck, C, H, W]
         chunk = (chunk_raw - mean) / std
 
         b, ck, C, H, W = chunk.shape

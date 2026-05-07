@@ -7,7 +7,7 @@
 
 This repository contains the code and supporting files for the experiments related to the paper **Blind confusion of classification networks: A black box evaluation under common and structured image corruptions**.
 
-The project evaluates image classification models under common and structured image corruptions in a black box setting. The main idea is simple: change the input image in controlled ways and measure how model accuracy and confidence respond.
+The project evaluates image classification models under common and structured image corruptions in a black box setting. The core approach is to apply controlled input corruptions and measure their effect on model accuracy and prediction confidence.
 
 The code was originally developed under the thesis project **Blind Confusion of Neural Networks** and later organized as a reference implementation for the paper.
 
@@ -15,7 +15,7 @@ The code was originally developed under the thesis project **Blind Confusion of 
 
 ![Blind black box corruption attack overview](figures/graphical_abstract.jpg)
 
-The paper evaluates how different image corruptions affect classification models when only the input and output behavior are considered. The examples below show the two main corruption families used in the study.
+The paper evaluates corruption robustness in a black box setting, where only the input images and model outputs are considered. The examples below show the two main corruption families used in the study.
 
 **Structured corruptions**
 
@@ -45,14 +45,14 @@ The paper also discusses Accuracy Confidence Divergence, abbreviated as ACD, to 
 ├── corruptions.py                 # corruption and noise functions
 ├── models.py                      # model loading utilities
 ├── env.yml                        # conda environment file
-├── reproducibilty_comp_Info.txt   # hardware, software and package record
+├── reproducibility_comp_Info.txt   # hardware, software and package record
 ├── map_synset.txt                 # ImageNet synset to numeric label mapping
 ├── synset_words.txt               # ImageNet synset names and descriptions
 ├── dataset_reference.md           # ImageNet reference note
 ├── figures/                       # reference figures used in README
 │   ├── graphical_abstract.jpg
-│   ├── structured_corruptions.jpeg
-│   └── common_corruptions.jpeg
+│   ├── structured_corruptions.png
+│   └── common_corruptions.png
 └── README.md
 ```
 
@@ -100,7 +100,7 @@ A practical extra installation command is:
 ```bash
 pip install torch torchvision timm tqdm pillow scikit-image pandas matplotlib seaborn opencv-python
 ```
-The experiment environment was recorded in `reproducibilty_comp_Info.txt`. The recorded setup includes:
+The experiment environment was recorded in `reproducibility_comp_Info.txt`. The recorded setup includes:
 
 ```text
 Ubuntu 22.04.5 LTS
@@ -231,9 +231,9 @@ noise_id    numeric corruption id
 intensity   corruption intensity value
 top1p       top 1 predicted probability
 corr        1 if prediction is correct, otherwise 0
-KL          KL related image quality field
-SSIM        structural similarity field
-PSNR        peak signal to noise ratio field
+KL          KL divergence field, zero when not computed
+SSIM        structural similarity score, zero when not computed
+PSNR        peak signal to noise ratio, zero when not computed
 ```
 
 ## Dataset reference
@@ -266,14 +266,7 @@ If you use this repository, cite the paper:
 }
 ```
 
-Code reference:
-
-```text
-Blind Confusion of Neural Networks
-GitHub repository: https://github.com/<your-username>/<your-repository>
-```
-
-Replace the placeholder with the final public repository URL.
+The broader thesis codebase is available in the [BlindConfusionOfNeuralNetworks](https://github.com/oguzerkara/BlindConfusionOfNeuralNetworks) repository.
 
 ## License and data notice
 

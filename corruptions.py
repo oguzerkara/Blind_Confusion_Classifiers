@@ -13,7 +13,6 @@ def stochastic_round(x: torch.Tensor, gen: torch.Generator) -> torch.Tensor:
 
 def _normalize_intensity(intensities, device):
     inten = torch.as_tensor(intensities, device=device, dtype=torch.float32)
-    # Eğer senin pipeline 0-10 ise otomatik normalize et
     if float(inten.max().item()) > 1.5:
         inten = inten / 10.0
     return inten.clamp(0.0, 1.0)
@@ -29,12 +28,11 @@ def confusion_blocks(images, intensities, block_size=8, max_coverage_limit=COVER
     blocks_y = (H + block_size - 1) // block_size
     total_blocks = blocks_x * blocks_y
 
-    k = stochastic_round(cov * total_blocks, gen=gen).clamp(0, total_blocks)  # [N]
+    k = stochastic_round(cov * total_blocks, gen=gen).clamp(0, total_blocks)  
 
     # nested scores per-image only
     scores = torch.rand((B, total_blocks), generator=gen, device=images.device)
 
-    # sort once
     order = torch.argsort(scores, dim=1)  # [B, total_blocks]
 
     mask_blocks = torch.zeros((B, N, total_blocks), device=images.device, dtype=torch.bool)
@@ -51,7 +49,6 @@ def confusion_blocks(images, intensities, block_size=8, max_coverage_limit=COVER
 
     imgs = images.unsqueeze(1).expand(B, N, C, H, W).clone()
 
-    # optional nested replacement values
     noise = torch.rand((B, 1, C, H, W), generator=gen, device=images.device, dtype=images.dtype)
     noise = noise.expand(B, N, C, H, W)
 
@@ -90,16 +87,16 @@ def random_lines( images, intensities, max_coverage_limit=COVERAGE_LIM,
     N = len(intensities)
 
     inten = _normalize_intensity(intensities, device)
-    coverage = (inten * float(max_coverage_limit)).clamp(0.0, 1.0)  # [N]
+    coverage = (inten * float(max_coverage_limit)).clamp(0.0, 1.0) 
 
     scale = min(H, W) / float(ref)
     lmin = max(1, int(round(line_length_range[0] * scale)))
     lmax = max(lmin + 1, int(round(line_length_range[1] * scale)))
     avg_len = 0.5 * (lmin + lmax)
 
-    target_points = coverage * float(H * W)          # [N]
-    exp_lines = target_points / float(avg_len)       # [N]
-    line_count = stochastic_round(exp_lines, gen=gen).clamp_min(0)  # [N]
+    target_points = coverage * float(H * W)         
+    exp_lines = target_points / float(avg_len)      
+    line_count = stochastic_round(exp_lines, gen=gen).clamp_min(0)  
 
     kmax = int(line_count.max().item())
     out = images.unsqueeze(1).expand(B, N, C, H, W).clone()
@@ -113,7 +110,7 @@ def random_lines( images, intensities, max_coverage_limit=COVERAGE_LIM,
     colors   = torch.rand((B, kmax, C), generator=gen, device=device, dtype=dtype)
 
     max_len = int(lmax)
-    offs = torch.arange(-max_len // 2, max_len // 2 + 1, device=device)  # [L]
+    offs = torch.arange(-max_len // 2, max_len // 2 + 1, device=device) 
     L = offs.numel()
 
     cos_a = torch.cos(torch.deg2rad(angles)).unsqueeze(-1)  # [B,kmax,1]
@@ -162,11 +159,11 @@ def random_crosses( images, intensities,max_coverage_limit=COVERAGE_LIM,
     N = len(intensities)
 
     inten = _normalize_intensity(intensities, device)
-    coverage = (inten * float(max_coverage_limit)).clamp(0.0, 1.0)  # [N]
+    coverage = (inten * float(max_coverage_limit)).clamp(0.0, 1.0) 
 
     target_points = coverage * float(H * W)
     exp_crosses = target_points / 5.0
-    cross_count = stochastic_round(exp_crosses, gen=gen).clamp_min(0)  # [N]
+    cross_count = stochastic_round(exp_crosses, gen=gen).clamp_min(0) 
 
     kmax = int(cross_count.max().item())
     out = images.unsqueeze(1).expand(B, N, C, H, W).clone()
@@ -234,7 +231,7 @@ def structured_square_wave_noise(images, intensities, max_amplitude=COVERAGE_LIM
 
     if direction == 'horizontal':
         bands = ((torch.arange(H, device=images.device)
-                         // period) % 2).float() * 2 - 1  # [-1,1]
+                         // period) % 2).float() * 2 - 1 
         pattern = bands.view(1,1,H,1).expand(N,C,H,W)
     else:
         bands = ((torch.arange(W, device=images.device)
@@ -271,7 +268,7 @@ def gaussian_blur(images, sigmas, gen=None, ref=224):
         if sigma == 0:
             outputs.append(images)
             continue
-        sigma = sigma * 10 * scale # scale sigma from the same range as other corruptions.
+        sigma = sigma * 10 * scale 
         # kernel size 6σ for even and large size
         k = max(3, int(2 * round(3 * sigma) + 1))
         coords = torch.arange(k, device=images.device) - k//2
